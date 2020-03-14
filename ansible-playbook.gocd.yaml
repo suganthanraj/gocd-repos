@@ -1,0 +1,30 @@
+format_version: 3
+pipelines:
+  ansible-playbook:
+    group: Example-Pipelines-Simple
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git:
+        git: https://github.com/suganthanraj/ansible-playbooks
+        username: suganthanraj
+        shallow_clone: false
+        auto_update: true
+        branch: master
+        encrypted_password: AES:5qouppCD7l8ZxtDNHNdE/A==:MhG9zoWtUYR9NVC9S+7yqw==
+    stages:
+    - Test:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          run-test:
+            timeout: 0
+            tasks:
+            - exec:
+                command: run-test
+                run_if: passed
